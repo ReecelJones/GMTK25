@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
     /// </summary>
     void GenerateGrid()
     {
+        tiles = new Dictionary<Vector2, Tile>();
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
