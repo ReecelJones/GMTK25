@@ -12,15 +12,17 @@ public class LevelLoader : MonoBehaviour
     public Transform cam;
 
     [Header("Level File")]
-    public TextAsset levelTextFile; // Drag your .txt file into this in the Inspector
+    public LevelData levelData;
 
     private Dictionary<Vector2, Tile> tiles;
     private PlayerUnit playerInstance;
     private UnitController enemyInstance;
+    public PlayerActionHandler playerUIHandler;
+
 
     public void LoadLevelFromText()
     {
-        if (levelTextFile == null)
+        if (levelData.levelTextFile == null)
         {
             Debug.LogError("No level text file assigned!");
             return;
@@ -28,7 +30,7 @@ public class LevelLoader : MonoBehaviour
 
         tiles = new Dictionary<Vector2, Tile>();
 
-        string[] lines = levelTextFile.text.Trim().Split('\n');
+        string[] lines = levelData.levelTextFile.text.Trim().Split('\n');
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
 
@@ -75,6 +77,17 @@ public class LevelLoader : MonoBehaviour
                 {
                     playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
                     playerInstance.SetPosition(position);
+
+                    if (levelData.availableActions != null)
+                    {
+                        playerInstance.actionLoop = new List<UnitAction>(levelData.availableActions);
+                    }
+
+                    if (playerUIHandler != null)
+                    {
+                        playerUIHandler.playerUnit = playerInstance;
+                        playerUIHandler.RefreshUI();
+                    }
                 }
 
                 // Optional: instantiate enemy units

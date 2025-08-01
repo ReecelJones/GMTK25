@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private string levelFileName = "Level1.txt";
     [SerializeField] private LevelLoader levelLoader;
+    [SerializeField] private PlayerActionHandler playerActionHandler;
 
 
     private void Awake()
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleSetActions()
     {
+        playerActionHandler.RefreshUI();
         UpdateGameState(GameState.PlayerTurn);
     }
 
