@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Tile : MonoBehaviour
 {
@@ -17,12 +19,13 @@ public class Tile : MonoBehaviour
     }
 
     // Doesnt work :(
-    private void OnMouseEnter()
+    void OnMouseEnter()
     {
-        highlight.SetActive(false);
+        highlight.SetActive(true);
+        Debug.Log("Mouse has entered" + gameObject.name);
     }
 
-    private void OnMouseExit()
+    void OnMouseExit()
     {
         highlight.SetActive(false);
     }
