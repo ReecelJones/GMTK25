@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 6529909481953654932, guid: bf5f1575373547e4e891207405a0b314, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -167,11 +167,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7253947867516191338, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
   m_PrefabInstance: {fileID: 6760348485018084993}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &4611000078148017654 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 7074034633760177015, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
-  m_PrefabInstance: {fileID: 6760348485018084993}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6750072929945075085 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 35050995805412108, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
@@ -191,7 +186,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseColour: {r: 1, g: 1, b: 1, a: 1}
   offsetColour: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
-  spriteRenderer: {fileID: 4611000078148017654}
   highlight: {fileID: 9130274585882777075}
 --- !u!1 &9130274585882777075 stripped
 GameObject:

@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     /// <param name="isOffset"></param>
     /// 
-    public void Start()
+    public void Awake()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
