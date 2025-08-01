@@ -39,15 +39,19 @@ public class UnitController : MonoBehaviour
         {
             case UnitActionType.MoveUp:
                 TryMove(Vector2.up);
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
                 break;
             case UnitActionType.MoveDown:
                 TryMove(Vector2.down);
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
                 break;
             case UnitActionType.MoveLeft:
                 TryMove(Vector2.left);
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 270));
                 break;
             case UnitActionType.MoveRight:
                 TryMove(Vector2.right);
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
                 break;
             case UnitActionType.Wait:
                 break;
