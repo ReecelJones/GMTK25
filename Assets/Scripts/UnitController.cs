@@ -1,12 +1,21 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System.Threading;
+using NUnit;
 
 public class UnitController : MonoBehaviour
 {
     public List<UnitAction> actionLoop = new List<UnitAction>();
+    
     protected int currentActionIndex = 0;
-    protected Vector2 currentPos;
+    public Vector2 currentPos;
+    protected Vector2 attackDir;
+
+    protected Tile currentTile;
+
+    public PlayerUnit playerUnit;
+
     public float actionDelay = 0.5f; // time between actions
     private Coroutine loopRoutine;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,12 +23,20 @@ public class UnitController : MonoBehaviour
     {
         currentPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
         transform.position = currentPos;
+        currentTile = GridManager.Instance.GetTileAtPosition(currentPos);
+        if (!GetComponent<PlayerUnit>())
+        {
+            playerUnit = FindFirstObjectByType<PlayerUnit>();
+            playerUnit.enemyList.Add(this);
+            print("lick");
+        }
     }
 
     public void SetPosition(Vector2 pos)
     {
         currentPos = pos;
         transform.position = pos;
+        
     }
 
     public void ExecuteNextAction()
@@ -70,11 +87,19 @@ public class UnitController : MonoBehaviour
 
         currentPos = newPosition;
         transform.position = newPosition;
+        currentTile = tile;
+        attackDir = currentPos + direction;
     }
 
     protected virtual void AttemptAttack()
     {
         // To be implemented differently for Player/Enemy
+        Tile tile = GridManager.Instance.GetTileAtPosition(attackDir);
+
+        if (tile == null || tile is RockTile) return;
+
+        print("boop");
+        
     }
 
     public void PlayActionLoop()

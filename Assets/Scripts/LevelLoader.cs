@@ -7,6 +7,7 @@ public class LevelLoader : MonoBehaviour
     public Tile grassTile, rockTile;
     public Tile enemyTile; // Optional: Use null for now
     public PlayerUnit playerPrefab;
+    public UnitController enemyPrefab;
 
     public Transform cam;
 
@@ -15,6 +16,7 @@ public class LevelLoader : MonoBehaviour
 
     private Dictionary<Vector2, Tile> tiles;
     private PlayerUnit playerInstance;
+    private UnitController enemyInstance;
 
     public void LoadLevelFromText()
     {
@@ -76,7 +78,10 @@ public class LevelLoader : MonoBehaviour
                 }
 
                 // Optional: instantiate enemy units
-                // if (symbol == "E") Instantiate(enemyPrefab, position, Quaternion.identity);
+                if (symbol == "E")
+                {
+                    enemyInstance = Instantiate(enemyPrefab, position, Quaternion.identity);
+                }
             }
         }
 
