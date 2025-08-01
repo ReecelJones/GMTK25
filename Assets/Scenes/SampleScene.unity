@@ -287,7 +287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 16
   height: 9
-  tilePrefab: {fileID: 4583188986436277650, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
+  grassTile: {fileID: 4677731628922355956, guid: b80e2d727660aad488dbcfd35b1a4f97, type: 3}
+  rockTile: {fileID: 2431749994035919414, guid: 49d47ab092763a946aa1c8fc1b221483, type: 3}
   cam: {fileID: 6074384}
 --- !u!4 &1906520730
 Transform:

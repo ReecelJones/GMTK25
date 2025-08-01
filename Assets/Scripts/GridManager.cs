@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     [SerializeField] private int width, height; //Width and Height of grid - change these values to change grid size
-    [SerializeField] private Tile tilePrefab;
+    [SerializeField] private Tile grassTile, rockTile;
 
     [SerializeField] private Transform cam;
 
@@ -29,10 +29,11 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                var spawnedTile = Instantiate(tilePrefab, new Vector3(x, y), Quaternion.identity); //Places tilePrefab in grid pattern
+                var randomTile = Random.Range(0, 6) == 3 ? rockTile : grassTile;
+                var spawnedTile = Instantiate(randomTile, new Vector3(x, y), Quaternion.identity); //Places tilePrefab in grid pattern
                 spawnedTile.name = $"Tile {x} {y}"; //Renames tile to X Y pos
 
-                var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0); //Returns bool if tile is offset
+                var isOffset = (x + y) % 2 == 1; //Returns bool if tile is offset
                 spawnedTile.Init(isOffset);
 
                 tiles[new Vector2(x, y)] = spawnedTile; //Adds tile to dictonary to allow to access tile
