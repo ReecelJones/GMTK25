@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 26305372082040705}
   - component: {fileID: 234955459826455338}
-  - component: {fileID: 2931436993724015788}
+  - component: {fileID: -6966735810679535019}
   m_Layer: 0
   m_Name: Enemy Unit
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2931436993724015788
+--- !u!114 &-6966735810679535019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,10 +97,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 479209486485796506}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9eb53182a2c6ce46adf8f169c17ac1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 814018e4167d7ec4f819f976b3af6fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actionLoop: []
   currentPos: {x: 0, y: 0}
-  playerUnit: {fileID: -3729608953348409901, guid: 45ea8e11fed36bb4fa2732a7ed032a31, type: 3}
+  attackEffect: {fileID: 0}
+  playerUnit: {fileID: 0}
   actionDelay: 0.5
+  playerUnit: {fileID: 0}

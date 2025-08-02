@@ -34,7 +34,6 @@ public class UnitController : MonoBehaviour
         if (!GetComponent<PlayerUnit>())
         {
             playerUnit = FindFirstObjectByType<PlayerUnit>();
-            playerUnit.enemyList.Add(this);
             print("lick");
         }
     }

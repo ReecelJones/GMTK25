@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PlayerUnit : UnitController
 {
-    public List<UnitController> enemyList = new List<UnitController>();
     private LevelData levelInfo;
     [SerializeField] private AudioClip attackHit, attackMiss, move, moveBlock;
 
@@ -39,13 +38,14 @@ public class PlayerUnit : UnitController
             Instantiate(attackEffect, attackDir, Quaternion.identity);
         }
 
-        for (int i = 0; i < enemyList.Count; i++)
+        for (int i = 0; i < GameManager.instance.enemyUnits.Count; i++)
         {
-            var currentEnemy = enemyList[i];
+            var currentEnemy = GameManager.instance.enemyUnits[i];
             if (currentEnemy.currentPos == attackDir)
             {
                 print("Yay");
-                currentEnemy.GetComponent<SpriteRenderer>().enabled = false;
+                Destroy(currentEnemy.gameObject);
+                GameManager.instance.OnEnemyKilled(currentEnemy);
                 unitAudio.PlayOneShot(attackHit);
             }
             else

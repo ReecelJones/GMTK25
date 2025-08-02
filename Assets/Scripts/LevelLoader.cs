@@ -7,20 +7,48 @@ public class LevelLoader : MonoBehaviour
     public Tile grassTile, rockTile;
     public Tile enemyTile; // Optional: Use null for now
     public PlayerUnit playerPrefab;
-    public UnitController enemyPrefab;
+    public EnemyUnit enemyPrefab;
 
     public Transform cam;
 
     [Header("Level File")]
     public LevelData levelData;
+    public List<LevelData> levels;
+    private int currentLevelIndex = 0;
+
 
     private Dictionary<Vector2, Tile> tiles;
     private PlayerUnit playerInstance;
-    private UnitController enemyInstance;
+    private EnemyUnit enemyInstance;
     public PlayerActionHandler playerUIHandler;
 
+    public void LoadCurrentLevel()
+    {
+        if (levels == null || levels.Count == 0 || currentLevelIndex >= levels.Count)
+        {
+            Debug.LogError("No levels available or index out of range.");
+            return;
+        }
 
-    public void LoadLevelFromText()
+        levelData = levels[currentLevelIndex];
+        LoadLevelFromText();
+    }
+
+    public void LoadNextLevel()
+    {
+        currentLevelIndex++;
+        if (currentLevelIndex < levels.Count)
+        {
+            LoadCurrentLevel();
+        }
+        else
+        {
+            Debug.Log("No more levels! You win!");
+            // or GameOver
+        }
+    }
+
+        public void LoadLevelFromText()
     {
         if (levelData.levelTextFile == null)
         {

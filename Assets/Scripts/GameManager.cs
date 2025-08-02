@@ -7,15 +7,18 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    private ResultHandler resultHandler;
 
     public GameState GameState;
+    public int objectiveKills;
+
+    public bool playerIsDead;
 
     public static event Action<GameState> OnGameStateChanged;
 
     public List<EnemyUnit> enemyUnits = new List<EnemyUnit>();
     public PlayerUnit playerUnit;
 
-    [SerializeField] private string levelFileName = "Level1.txt";
     [SerializeField] private LevelLoader levelLoader;
     [SerializeField] private PlayerActionHandler playerActionHandler;
 
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         UpdateGameState(GameState.GenerateGrid);
         playerUnit = FindFirstObjectByType<PlayerUnit>();
+        resultHandler = FindFirstObjectByType<ResultHandler>();
     }
 
     public void UpdateGameState(GameState newState)
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.GenerateGrid:
                 levelLoader.LoadLevelFromText();
+                objectiveKills = enemyUnits.Count;
                 break;
             case GameState.SetActions:
                 HandleSetActions();
@@ -50,7 +55,15 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.EnemyTurn:
                 break;
-            case GameState.Victory:
+            case GameState.EndResult:
+                if (playerIsDead)
+                {
+                    HandleResult(false);
+                }
+                else
+                {
+                    HandleResult(true);
+                }
                 break;
             case GameState.Reset:
                 HandleResetLevel();
@@ -91,7 +104,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RunPlayerTurn()
     {
-        PlayerUnit player = FindObjectOfType<PlayerUnit>();
+        PlayerUnit player = FindFirstObjectByType<PlayerUnit>();
 
         if (player != null)
         {
@@ -124,12 +137,32 @@ public class GameManager : MonoBehaviour
                 Destroy(enemy.gameObject);
         }
         enemyUnits.Clear();
+        objectiveKills = 0;
 
         // 4. Reload the level
         levelLoader.LoadLevelFromText();
 
         // 5. Wait a frame and reassign player
         StartCoroutine(ApplySavedActionsAfterReload());
+    }
+
+    public void OnEnemyKilled(EnemyUnit enemy)
+    {
+        if (enemyUnits.Contains(enemy))
+            enemyUnits.Remove(enemy);
+
+        objectiveKills--;
+
+        if (objectiveKills <= 0)
+        {
+            UpdateGameState(GameState.EndResult);
+        }
+    }
+
+    public void HandleResult(bool PlayerWin)
+    {
+        resultHandler.didPlayerWin = PlayerWin;
+        resultHandler.DisplayEndScreen();
     }
 
     private IEnumerator ApplySavedActionsAfterReload()
@@ -163,6 +196,8 @@ public class GameManager : MonoBehaviour
 
         UpdateGameState(GameState.SetActions);
     }
+
+  
 }
 
 public enum GameState
@@ -171,6 +206,6 @@ public enum GameState
     SetActions,
     PlayerTurn,
     EnemyTurn,
-    Victory,
+    EndResult,
     Reset
 }
