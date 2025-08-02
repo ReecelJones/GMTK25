@@ -44,8 +44,12 @@ public class PlayerUnit : UnitController
             if (currentEnemy.currentPos == attackDir)
             {
                 print("Yay");
-                Destroy(currentEnemy.gameObject);
-                GameManager.instance.OnEnemyKilled(currentEnemy);
+                //Destroy(currentEnemy.gameObject);
+                var enemyHealth = currentEnemy.GetComponent<Health>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(50);
+                }
                 unitAudio.PlayOneShot(attackHit);
             }
             else
