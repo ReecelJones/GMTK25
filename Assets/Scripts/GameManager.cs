@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelLoader levelLoader;
     [SerializeField] private PlayerActionHandler playerActionHandler;
 
+    private List<UnitAction> savedPlayerActions;
+
+
 
     private void Awake()
     {
@@ -50,6 +53,7 @@ public class GameManager : MonoBehaviour
             case GameState.Victory:
                 break;
             case GameState.Reset:
+                HandleResetLevel();
                 break;
         }
 
@@ -96,6 +100,68 @@ public class GameManager : MonoBehaviour
         }
 
         UpdateGameState(GameState.EnemyTurn); // or wait for input/reset option
+    }
+
+    public void HandleResetLevel()
+    {
+        // 1. Save current action order
+        if (playerUnit != null && playerUnit.actionLoop != null)
+            savedPlayerActions = new List<UnitAction>(playerUnit.actionLoop);
+        else
+            savedPlayerActions = null;
+
+        // 2. Destroy current player
+        if (playerUnit != null)
+        {
+            Destroy(playerUnit.gameObject);
+            playerUnit = null;
+        }
+
+        // 3. Clear previous enemies
+        foreach (var enemy in enemyUnits)
+        {
+            if (enemy != null)
+                Destroy(enemy.gameObject);
+        }
+        enemyUnits.Clear();
+
+        // 4. Reload the level
+        levelLoader.LoadLevelFromText();
+
+        // 5. Wait a frame and reassign player
+        StartCoroutine(ApplySavedActionsAfterReload());
+    }
+
+    private IEnumerator ApplySavedActionsAfterReload()
+    {
+        // Wait for one frame so the level is fully loaded and player is instantiated
+        yield return null;
+
+        playerUnit = FindFirstObjectByType<PlayerUnit>();
+
+        if (playerUnit != null)
+        {
+            // Restore saved actions
+            if (savedPlayerActions != null)
+                playerUnit.actionLoop = new List<UnitAction>(savedPlayerActions);
+
+            // Reconnect PlayerActionHandler (in case it's tied to old reference)
+            if (playerActionHandler != null)
+            {
+                playerActionHandler.playerUnit = playerUnit;
+                playerActionHandler.RefreshUI();
+            }
+            else
+            {
+                Debug.LogWarning("PlayerActionHandler is not assigned in GameManager.");
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerUnit not found after level reload.");
+        }
+
+        UpdateGameState(GameState.SetActions);
     }
 }
 

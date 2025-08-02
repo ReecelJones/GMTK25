@@ -4,15 +4,20 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public Button startLoopButton;
+    public Button startTurnButton, resetButton;
 
     private void Start()
     {
-        startLoopButton.onClick.AddListener(OnStartLoopClicked);
+        startTurnButton.onClick.AddListener(OnStartTurnClicked);
+        resetButton.onClick.AddListener(OnResetClicked);
     }
 
-    private void OnStartLoopClicked()
+    private void OnStartTurnClicked()
     {
-        GameManager.instance.StartPlayerTurn(); // Custom method to trigger turn
+        GameManager.instance.StartPlayerTurn();
+    }
+    private void OnResetClicked()
+    {
+        GameManager.instance.HandleResetLevel();
     }
 }
