@@ -11,16 +11,23 @@ public class UnitController : MonoBehaviour
     protected int currentActionIndex = 0;
     public Vector2 currentPos;
     protected Vector2 attackDir;
+    protected Vector2 lastDirection = Vector2.down;
+    public GameObject attackEffect;
 
     protected Tile currentTile;
 
     public PlayerUnit playerUnit;
+
+    protected Animator unitAnimator;
+    protected AudioSource unitAudio;
 
     public float actionDelay = 0.5f; // time between actions
     private Coroutine loopRoutine;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
+        unitAnimator = GetComponent<Animator>();
+        unitAudio = GetComponent<AudioSource>();
         currentPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
         transform.position = currentPos;
         currentTile = GridManager.Instance.GetTileAtPosition(currentPos);
@@ -80,6 +87,9 @@ public class UnitController : MonoBehaviour
 
     protected virtual void TryMove(Vector2 direction)
     {
+        lastDirection = direction;
+        attackDir = currentPos + direction; // Set this BEFORE updating currentPos
+
         Vector2 newPosition = currentPos + direction;
         Tile tile = GridManager.Instance.GetTileAtPosition(newPosition);
 
@@ -88,18 +98,27 @@ public class UnitController : MonoBehaviour
         currentPos = newPosition;
         transform.position = newPosition;
         currentTile = tile;
-        attackDir = currentPos + direction;
+
+        unitAnimator.SetTrigger("Move");
     }
 
     protected virtual void AttemptAttack()
     {
-        // To be implemented differently for Player/Enemy
-        Tile tile = GridManager.Instance.GetTileAtPosition(attackDir);
+        attackDir = currentPos + lastDirection;
 
+        unitAnimator.SetTrigger("Attack");
+
+        Tile tile = GridManager.Instance.GetTileAtPosition(attackDir);
         if (tile == null || tile is RockTile) return;
 
+        Debug.Log("Attack triggered at: " + attackDir);
+
+        if (attackEffect != null)
+        {
+            Instantiate(attackEffect, attackDir, Quaternion.identity);
+        }
+
         print("boop");
-        
     }
 
     public void PlayActionLoop()

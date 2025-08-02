@@ -4,21 +4,14 @@ using UnityEngine;
 public class PlayerUnit : UnitController
 {
     public List<UnitController> enemyList = new List<UnitController>();
-    private Vector2 currentPos;
     private LevelData levelInfo;
+    [SerializeField] private AudioClip attackHit, attackMiss, move, moveBlock;
 
     protected override void Start()
     {
         base.Start();
-        // Round to grid coordinates
-        //currentPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
-        //transform.position = currentPos;
+
         levelInfo = FindFirstObjectByType<LevelLoader>().levelData;
-
-        // Round to grid coordinates
-        currentPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
-        transform.position = currentPos;
-
         if (levelInfo != null && levelInfo.availableActions != null)
         {
             actionLoop = new List<UnitAction>(levelInfo.availableActions);
@@ -27,7 +20,6 @@ public class PlayerUnit : UnitController
         {
             Debug.LogWarning("LevelData or availableActions is missing!");
         }
-
     }
 
     private void Update()
@@ -38,8 +30,15 @@ public class PlayerUnit : UnitController
     protected override void AttemptAttack()
     {
         base.AttemptAttack();
-        // Check for enemies nearby and damage them
+        attackDir = currentPos + lastDirection;
+
         Debug.Log("Player attacking!");
+
+        if (attackEffect != null)
+        {
+            Instantiate(attackEffect, attackDir, Quaternion.identity);
+        }
+
         for (int i = 0; i < enemyList.Count; i++)
         {
             var currentEnemy = enemyList[i];
@@ -47,12 +46,13 @@ public class PlayerUnit : UnitController
             {
                 print("Yay");
                 currentEnemy.GetComponent<SpriteRenderer>().enabled = false;
+                unitAudio.PlayOneShot(attackHit);
             }
             else
             {
                 print("missed");
+                unitAudio.PlayOneShot(attackMiss);
             }
         }
-
     }
 }
