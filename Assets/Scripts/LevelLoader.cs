@@ -48,8 +48,10 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-        public void LoadLevelFromText()
+    public void LoadLevelFromText()
     {
+        ClearCurrentLevel();
+
         if (levelData.levelTextFile == null)
         {
             Debug.LogError("No level text file assigned!");
@@ -105,6 +107,8 @@ public class LevelLoader : MonoBehaviour
                 {
                     playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
                     playerInstance.SetPosition(position);
+                    GameManager.instance.playerUnit = playerInstance;
+ 
 
                     if (levelData.availableActions != null)
                     {
@@ -129,5 +133,30 @@ public class LevelLoader : MonoBehaviour
         cam.transform.position = new Vector3((float)width / 2 - 0.5f, (float)height / 2 - 0.5f, -10);
 
         GameManager.instance.UpdateGameState(GameState.SetActions);
+    }
+
+    private void ClearCurrentLevel()
+    {
+        // Destroy all previous tiles
+        foreach (var tile in FindObjectsOfType<Tile>())
+        {
+            Destroy(tile.gameObject);
+        }
+
+        // Destroy player if exists
+        if (playerInstance != null)
+        {
+            Destroy(playerInstance.gameObject);
+            playerInstance = null;
+        }
+
+        // Destroy enemies
+        foreach (var enemy in FindObjectsOfType<EnemyUnit>())
+        {
+            Destroy(enemy.gameObject);
+        }
+
+        // Clear grid tiles
+        GridManager.Instance.ClearAllTiles();
     }
 }

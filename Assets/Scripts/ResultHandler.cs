@@ -17,15 +17,15 @@ public class ResultHandler : MonoBehaviour
         uiManager = FindFirstObjectByType<UIManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DisplayEndScreen()
     {
+        resultNextButton.onClick.RemoveAllListeners(); // Clear old listeners first
+
         if (didPlayerWin)
         {
             resultNextButton.onClick.AddListener(uiManager.NextLevel);
             buttonTxt.text = "Next Level";
             resultScreen.GetComponent<Image>().color = winColor;
-
             resultTxt.text = "Victory";
         }
         else
@@ -33,14 +33,9 @@ public class ResultHandler : MonoBehaviour
             resultNextButton.onClick.AddListener(uiManager.OnResetClicked);
             buttonTxt.text = "Retry";
             resultScreen.GetComponent<Image>().color = loseColor;
-
-
             resultTxt.text = "Defeat";
         }
-    }
 
-    public void DisplayEndScreen()
-    {
         resultScreen.SetActive(true);
     }
 }

@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateGameState(GameState.GenerateGrid);
-        playerUnit = FindFirstObjectByType<PlayerUnit>();
         resultHandler = FindFirstObjectByType<ResultHandler>();
     }
 

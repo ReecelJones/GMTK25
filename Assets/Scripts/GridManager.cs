@@ -79,4 +79,18 @@ public class GridManager : MonoBehaviour
 
         return null;
     }
+    public void ClearAllTiles()
+    {
+        if (tiles == null) return;
+
+        foreach (var tile in tiles.Values)
+        {
+            if (tile != null)
+            {
+                Destroy(tile.gameObject);
+            }
+        }
+
+        tiles.Clear();
+    }
 }
