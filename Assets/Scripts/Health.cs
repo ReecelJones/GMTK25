@@ -6,11 +6,12 @@ public class Health : MonoBehaviour
     public float maxHealth = 100f;
     private float curHealth;
 
-    public Slider healthBar;
+    private Slider healthBar;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        healthBar = GetComponentInChildren<Slider>();
         curHealth = maxHealth;
 
         if (healthBar != null)

@@ -92,13 +92,25 @@ public class UnitController : MonoBehaviour
         Vector2 newPosition = currentPos + direction;
         Tile tile = GridManager.Instance.GetTileAtPosition(newPosition);
 
-        if (tile == null || tile is RockTile) return;
+        if (tile == null || tile is RockTile || IsEnemyAtPosition(newPosition)) return;
 
         currentPos = newPosition;
         transform.position = newPosition;
         currentTile = tile;
 
         unitAnimator.SetTrigger("Move");
+    }
+
+    protected bool IsEnemyAtPosition(Vector2 position) // checks if enemy is at position when trying to move
+    {
+        foreach (var enemy in GameManager.instance.enemyUnits)
+        {
+            if (enemy != null && enemy.currentPos == position)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected virtual void AttemptAttack()
