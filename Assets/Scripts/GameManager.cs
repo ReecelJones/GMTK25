@@ -177,7 +177,6 @@ public class GameManager : MonoBehaviour
             if (savedPlayerActions != null)
                 playerUnit.actionLoop = new List<UnitAction>(savedPlayerActions);
 
-            // Reconnect PlayerActionHandler (in case it's tied to old reference)
             if (playerActionHandler != null)
             {
                 playerActionHandler.playerUnit = playerUnit;

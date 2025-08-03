@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Collections;
 
 public class LevelLoader : MonoBehaviour
 {
     public Tile grassTile, rockTile;
-    public Tile enemyTile; // Optional: Use null for now
+    public Tile enemyTile;
     public PlayerUnit playerPrefab;
     public EnemyUnit enemyPrefab;
     public GameObject tutorialPrompt;
@@ -45,14 +46,13 @@ public class LevelLoader : MonoBehaviour
         else
         {
             Debug.Log("No more levels! You win!");
-            // or GameOver
         }
     }
 
     public void LoadLevelFromText()
     {
         ClearCurrentLevel();
-        
+
         if (levelData.levelTextFile == null)
         {
             Debug.LogError("No level text file assigned!");
@@ -64,47 +64,41 @@ public class LevelLoader : MonoBehaviour
             tutorialPrompt.SetActive(true);
             isTutorial = false;
         }
-        else 
-        { 
+        else
+        {
             Destroy(tutorialPrompt);
         }
 
-            tiles = new Dictionary<Vector2, Tile>();
+        tiles = new Dictionary<Vector2, Tile>();
 
         string[] lines = levelData.levelTextFile.text.Trim().Split('\n');
+        StartCoroutine(AnimateGridSpawn(lines));
+    }
+
+    private IEnumerator AnimateGridSpawn(string[] lines)
+    {
         int height = lines.Length;
         int width = lines[0].Split(',').Length;
 
+        tiles = new Dictionary<Vector2, Tile>();
+
+        // Center the camera BEFORE spawning tiles
+        cam.transform.position = new Vector3((float)width / 2 - 0.5f, (float)height / 2 - 0.5f, -10);
+
         for (int y = 0; y < height; y++)
         {
-            string[] chars = lines[y].Trim().Split(',');
-            for (int x = 0; x < chars.Length; x++)
+            string[] symbols = lines[y].Trim().Split(',');
+
+            for (int x = 0; x < symbols.Length; x++)
             {
-                string symbol = chars[x].Trim();
-                Tile tilePrefab = null;
+                string symbol = symbols[x].Trim();
+                Tile tilePrefab = GetTilePrefab(symbol);
 
-                switch (symbol)
-                {
-                    case "G":
-                        tilePrefab = grassTile;
-                        break;
-                    case "R":
-                        tilePrefab = rockTile;
-                        break;
-                    case "E":
-                        tilePrefab = grassTile; // base tile + spawn enemy
-                        break;
-                    case "P":
-                        tilePrefab = grassTile; // base tile + spawn player
-                        break;
-                    default:
-                        tilePrefab = grassTile; // fallback
-                        break;
-                }
+                Vector2 position = new Vector2(x, height - 1 - y);
 
-                Vector2 position = new Vector2(x, height - 1 - y); // Flip Y
-
-                Tile spawnedTile = Instantiate(tilePrefab, new Vector3(position.x, position.y, 0), Quaternion.identity);
+                // Fly in from above
+                Vector3 spawnPos = new Vector3(position.x, position.y + 5f, 0);
+                Tile spawnedTile = Instantiate(tilePrefab, spawnPos, Quaternion.identity);
                 spawnedTile.name = $"Tile {x},{y}";
 
                 bool isOffset = (x + y) % 2 == 1;
@@ -113,72 +107,80 @@ public class LevelLoader : MonoBehaviour
                 tiles[position] = spawnedTile;
                 GridManager.Instance.RegisterTile(position, spawnedTile);
 
+                LeanTween.moveY(spawnedTile.gameObject, position.y, 0.3f).setEaseOutCubic();
 
-                if (symbol == "P")
-                {
-                    playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
-                    playerInstance.SetPosition(position);
-                    GameManager.instance.playerUnit = playerInstance;
- 
-                    
-                    if (levelData.availablePlayerActions != null)
-                    {
-                        playerInstance.actionLoop = new List<UnitAction>(levelData.availablePlayerActions);
-                    }
+                //created new voids for ease
+                if (symbol == "P") SpawnPlayer(position);
+                if (symbol == "E") SpawnEnemy(position);
 
-                    if (playerUIHandler != null)
-                    {
-                        playerUIHandler.playerUnit = playerInstance;
-                        playerUIHandler.RefreshUI();
-                    }
-                }
-
-                // Optional: instantiate enemy units
-                if (symbol == "E")
-                {
-                    enemyInstance = Instantiate(enemyPrefab, position, Quaternion.identity);
-                }
+                yield return new WaitForSeconds(0.05f);
             }
         }
-
-        cam.transform.position = new Vector3((float)width / 2 - 0.5f, (float)height / 2 - 0.5f, -10);
 
         GameManager.instance.UpdateGameState(GameState.SetActions);
     }
 
+    private Tile GetTilePrefab(string symbol)
+    {
+        switch (symbol)
+        {
+            case "G": return grassTile;
+            case "R": return rockTile;
+            case "E": return grassTile;
+            case "P": return grassTile;
+            default: return grassTile;
+        }
+    }
+
+    private void SpawnPlayer(Vector2 position)
+    {
+        playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
+        playerInstance.SetPosition(position);
+        GameManager.instance.playerUnit = playerInstance;
+
+        if (levelData.availablePlayerActions != null)
+        {
+            playerInstance.actionLoop = new List<UnitAction>(levelData.availablePlayerActions);
+        }
+
+        if (playerUIHandler != null)
+        {
+            playerUIHandler.playerUnit = playerInstance;
+            playerUIHandler.RefreshUI();
+        }
+    }
+
+    private void SpawnEnemy(Vector2 position)
+    {
+        enemyInstance = Instantiate(enemyPrefab, position, Quaternion.identity);
+    }
+
     private void ClearCurrentLevel()
     {
-        // Destroy all previous tiles
         foreach (var tile in FindObjectsByType<Tile>(FindObjectsSortMode.None))
         {
             Destroy(tile.gameObject);
         }
 
-        // Destroy player if exists
         if (playerInstance != null)
         {
             Destroy(playerInstance.gameObject);
             playerInstance = null;
         }
 
-        // Destroy enemies
         foreach (var enemy in FindObjectsByType<EnemyUnit>(FindObjectsSortMode.None))
         {
             Destroy(enemy.gameObject);
         }
 
-        // Clear grid tiles
         GridManager.Instance.ClearAllTiles();
     }
 
     private void Update()
     {
-        if(isTutorial)
+        if (isTutorial && GameManager.instance.GameState == GameState.EndResult)
         {
-            if(GameManager.instance.GameState == GameState.EndResult)
-            {
-                Destroy(tutorialPrompt);
-            }
+            Destroy(tutorialPrompt);
         }
     }
 }

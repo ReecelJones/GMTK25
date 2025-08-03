@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1edbb4930d9d34c4c81af93d69b6ea15
+guid: e69a45622bbaadb4b9f5b47433cfa107
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8879710401396285631
-    second: 2Artboard 1_0
+      213: -3808124083976146520
+    second: RockTile_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 125
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 2Artboard 1_0
+      name: RockTile_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 960
-        height: 300
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 14fde68cf6ee4c480800000000000000
-      internalID: -8879710401396285631
+      spriteID: 8a1fdf96253d62bc0800000000000000
+      internalID: -3808124083976146520
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      2Artboard 1_0: -8879710401396285631
+      RockTile_0: -3808124083976146520
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

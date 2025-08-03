@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 5866897619242046769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.132, z: 0}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4141805352320181483}
@@ -96,6 +96,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -866592525493215200, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: -866592525493215200, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: -866592525493215200, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.024
       objectReference: {fileID: 0}
@@ -108,9 +116,17 @@ PrefabInstance:
       value: Rock Tile
       objectReference: {fileID: 0}
     - target: {fileID: 7074034633760177015, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
+      propertyPath: m_Size.x
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074034633760177015, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
+      propertyPath: m_Size.y
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074034633760177015, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1347532211411968617, guid: be60712b30085574892fdf51fc938dfa, type: 3}
+      objectReference: {fileID: -3808124083976146520, guid: e69a45622bbaadb4b9f5b47433cfa107, type: 3}
     - target: {fileID: 7253947867516191338, guid: 9b0f1680995912b4fa8e4cef3bef0449, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
