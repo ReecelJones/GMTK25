@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerUnit : UnitController
 {
     private LevelData levelInfo;
-    [SerializeField] private AudioClip attackHit, attackMiss, move, moveBlock;
 
     protected override void Start()
     {

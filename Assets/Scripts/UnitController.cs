@@ -20,6 +20,7 @@ public class UnitController : MonoBehaviour
 
     protected Animator unitAnimator;
     protected AudioSource unitAudio;
+    [SerializeField] protected AudioClip attackHit, attackMiss, move, moveBlock;
 
     public float actionDelay = 0.5f; // time between actions
     private Coroutine loopRoutine;
@@ -92,7 +93,15 @@ public class UnitController : MonoBehaviour
         Vector2 newPosition = currentPos + direction;
         Tile tile = GridManager.Instance.GetTileAtPosition(newPosition);
 
-        if (tile == null || tile is RockTile || IsUnitAtPosition(newPosition)) return;
+        if (tile == null || tile is RockTile || IsUnitAtPosition(newPosition))
+        {
+            unitAudio.PlayOneShot(moveBlock);
+            return;
+        }
+        else
+        {
+            unitAudio.PlayOneShot(move);
+        }
 
         currentPos = newPosition;
         transform.position = newPosition;
