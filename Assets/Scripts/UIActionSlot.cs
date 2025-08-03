@@ -1,26 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using UnityEngine.EventSystems;
 
-public class UIActionSlot : MonoBehaviour
+public class UIActionSlot : MonoBehaviour, IDropHandler
 {
     public int slotIndex;
-    public Button button;
-    public TMP_Text label;
-
     private UnitAction action;
-    private System.Action<int> onClickCallback;
 
     private UIManager UIManager;
 
-    public void Setup(UnitAction action, int index, System.Action<int> onClick)
+    public void Setup(int index, System.Action<int> onClick)
     {
-        this.action = action;
         this.slotIndex = index;
-        this.onClickCallback = onClick;
-
-        label.text = action.ActionType.ToString();
-        button.onClick.AddListener(() => onClickCallback?.Invoke(slotIndex));
         UIManager = FindFirstObjectByType<UIManager>();
     }
 
@@ -38,12 +29,32 @@ public class UIActionSlot : MonoBehaviour
 
     public void LockAction()
     {
-        UIManager.startTurnButton.interactable = false;
-        button.interactable = false;
+
     }
     public void UnlockAction()
     {
-        UIManager.startTurnButton.interactable = true;
-        button.interactable = true;
+
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (transform.childCount == 0)
+        {
+            GameObject dropped = eventData.pointerDrag;
+            ActionItem draggableItem = dropped.GetComponent<ActionItem>();
+            draggableItem.parentAfterDrag = transform;
+        }
+        else
+        {
+            Debug.Log("Should Swap");
+            GameObject dropped = eventData.pointerDrag;
+            ActionItem draggableItem = dropped.GetComponent<ActionItem>();
+
+            GameObject current = transform.GetChild(0).gameObject;
+            ActionItem currentDraggable = current.GetComponent<ActionItem>();
+
+            currentDraggable.transform.SetParent(draggableItem.parentAfterDrag);
+            draggableItem.parentAfterDrag = transform;
+        }
     }
 }

@@ -107,13 +107,8 @@ public class LevelLoader : MonoBehaviour
                 {
                     playerInstance = Instantiate(playerPrefab, position, Quaternion.identity);
                     playerInstance.SetPosition(position);
+                    playerInstance.SetLevelData(levelData);
                     GameManager.instance.playerUnit = playerInstance;
- 
-                    
-                    if (levelData.availablePlayerActions != null)
-                    {
-                        playerInstance.actionLoop = new List<UnitAction>(levelData.availablePlayerActions);
-                    }
 
                     if (playerUIHandler != null)
                     {

@@ -391,7 +391,7 @@ SpriteRenderer:
   m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1163850402497821945
@@ -419,9 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db95ab021b15614fa4d2b266640dc55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionLoop:
-  - ActionType: 5
-  - ActionType: 5
+  actionLoop: []
   currentPos: {x: 0, y: 0}
   attackEffect: {fileID: 4143661329324036182, guid: f7425951dae7fca40971570f350673c2, type: 3}
   playerUnit: {fileID: 0}

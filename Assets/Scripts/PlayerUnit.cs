@@ -5,18 +5,14 @@ public class PlayerUnit : UnitController
 {
     private LevelData levelInfo;
 
+    public void SetLevelData(LevelData data)
+    {
+        levelInfo = data;
+    }
+
     protected override void Start()
     {
         base.Start();
-
-        if (levelInfo != null && levelInfo.availablePlayerActions != null)
-        {
-            actionLoop = new List<UnitAction>(levelInfo.availablePlayerActions);
-        }
-        else
-        {
-            Debug.LogWarning("LevelData or availableActions is missing!");
-        }
     }
 
     private void Update()

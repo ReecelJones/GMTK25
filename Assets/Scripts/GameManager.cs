@@ -76,7 +76,19 @@ public class GameManager : MonoBehaviour
 
     private void HandleSetActions()
     {
+        if (playerUnit == null)
+        {
+            Debug.LogWarning("HandleSetActions called but playerUnit is null");
+            return;
+        }
+
+        if (playerUnit.actionLoop == null || playerUnit.actionLoop.Count == 0)
+        {
+            Debug.LogWarning("HandleSetActions called but actionLoop is null or empty");
+            return;
+        }
         playerActionHandler.RefreshUI();
+
     }
 
     private void EnemyTurn()
@@ -156,22 +168,18 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ApplySavedActionsAfterReload()
     {
-        // Wait for one frame so the level is fully loaded and player is instantiated
-        yield return null;
-
+        // Wait for PlayerUnit to be instantiated
+        yield return new WaitUntil(() => FindFirstObjectByType<PlayerUnit>() != null);
         playerUnit = FindFirstObjectByType<PlayerUnit>();
 
         if (playerUnit != null)
         {
-            // Restore saved actions
             if (savedPlayerActions != null)
                 playerUnit.actionLoop = new List<UnitAction>(savedPlayerActions);
 
-            // Reconnect PlayerActionHandler (in case it's tied to old reference)
             if (playerActionHandler != null)
             {
                 playerActionHandler.playerUnit = playerUnit;
-                playerActionHandler.RefreshUI();
             }
             else
             {
@@ -185,9 +193,7 @@ public class GameManager : MonoBehaviour
 
         UpdateGameState(GameState.SetActions);
     }
-
-  
-}
+ }
 
 public enum GameState
 {
