@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     private void OnStartTurnClicked()
     {
-        GameManager.instance.StartPlayerTurn();
+        GameManager.instance.UpdateGameState(GameState.PlayerTurn);
     }
     public void OnResetClicked()
     {

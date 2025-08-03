@@ -11,6 +11,8 @@ public class UIActionSlot : MonoBehaviour
     private UnitAction action;
     private System.Action<int> onClickCallback;
 
+    private UIManager UIManager;
+
     public void Setup(UnitAction action, int index, System.Action<int> onClick)
     {
         this.action = action;
@@ -19,5 +21,29 @@ public class UIActionSlot : MonoBehaviour
 
         label.text = action.ActionType.ToString();
         button.onClick.AddListener(() => onClickCallback?.Invoke(slotIndex));
+        UIManager = FindFirstObjectByType<UIManager>();
+    }
+
+    public void Update()
+    {
+        if (GameManager.instance.GameState == GameState.SetActions)
+        {
+            UnlockAction();
+        }
+        else
+        {
+            LockAction();
+        }
+    }
+
+    public void LockAction()
+    {
+        UIManager.startTurnButton.interactable = false;
+        button.interactable = false;
+    }
+    public void UnlockAction()
+    {
+        UIManager.startTurnButton.interactable = true;
+        button.interactable = true;
     }
 }
