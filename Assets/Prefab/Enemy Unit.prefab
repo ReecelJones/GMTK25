@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 234955459826455338}
   - component: {fileID: -6966735810679535019}
   - component: {fileID: 3559413731826655920}
+  - component: {fileID: -3419005989966279309}
   m_Layer: 0
   m_Name: Enemy Unit
   m_TagString: Untagged
@@ -102,7 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814018e4167d7ec4f819f976b3af6fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionLoop: []
+  actionLoop:
+  - ActionType: 1
+  - ActionType: 3
+  - ActionType: 5
   currentPos: {x: 0, y: 0}
   attackEffect: {fileID: 0}
   playerUnit: {fileID: 0}
@@ -120,7 +124,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  healthBar: {fileID: 7052797643635157616}
+--- !u!95 &-3419005989966279309
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479209486485796506}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d5f2c9d8f22e9041aba66b1a9d43499, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &516236009605874621
 GameObject:
   m_ObjectHideFlags: 0

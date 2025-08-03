@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var enemy in enemyUnits)
         {
-            enemy.ExecuteNextAction();
+            enemy.PlayActionLoop();
         }
 
         UpdateGameState(GameState.PlayerTurn); // Or queue up delays/animations
@@ -93,12 +93,14 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.PlayerTurn);
         playerUnit.PlayActionLoop();
     }
+
     public void EndPlayerTurn()
     {
         UpdateGameState(GameState.EnemyTurn);
 
         //// Start enemy turn next, for example:
         //StartCoroutine(HandleEnemyTurn());
+        EnemyTurn();
     }
 
     private IEnumerator RunPlayerTurn()
