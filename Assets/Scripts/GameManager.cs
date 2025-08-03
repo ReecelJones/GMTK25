@@ -51,8 +51,10 @@ public class GameManager : MonoBehaviour
                 HandleSetActions();
                 break;
             case GameState.PlayerTurn:
+                StartPlayerTurn();
                 break;
             case GameState.EnemyTurn:
+                EnemyTurn();
                 break;
             case GameState.EndResult:
                 if (playerIsDead)
@@ -75,7 +77,6 @@ public class GameManager : MonoBehaviour
     private void HandleSetActions()
     {
         playerActionHandler.RefreshUI();
-        UpdateGameState(GameState.PlayerTurn);
     }
 
     private void EnemyTurn()
@@ -90,7 +91,6 @@ public class GameManager : MonoBehaviour
 
     public void StartPlayerTurn()
     {
-        UpdateGameState(GameState.PlayerTurn);
         playerUnit.PlayActionLoop();
     }
     public void EndPlayerTurn()
