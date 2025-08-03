@@ -85,8 +85,6 @@ public class GameManager : MonoBehaviour
         {
             enemy.PlayActionLoop();
         }
-
-        UpdateGameState(GameState.PlayerTurn); // Or queue up delays/animations
     }
 
     public void StartPlayerTurn()
@@ -94,26 +92,16 @@ public class GameManager : MonoBehaviour
         playerUnit.PlayActionLoop();
     }
 
-    public void EndPlayerTurn()
+    public void EndTurn()
     {
-        UpdateGameState(GameState.EnemyTurn);
-
-        //// Start enemy turn next, for example:
-        //StartCoroutine(HandleEnemyTurn());
-        EnemyTurn();
-    }
-
-    private IEnumerator RunPlayerTurn()
-    {
-        PlayerUnit player = FindFirstObjectByType<PlayerUnit>();
-
-        if (player != null)
+        if(GameState == GameState.EnemyTurn)
         {
-            player.ExecuteNextAction(); // this uses the actionLoop
-            yield return new WaitForSeconds(0.5f); // optional delay
+            UpdateGameState(GameState.PlayerTurn);
         }
-
-        UpdateGameState(GameState.EnemyTurn); // or wait for input/reset option
+        else if(GameState == GameState.PlayerTurn)
+        {
+            UpdateGameState(GameState.EnemyTurn);
+        }
     }
 
     public void HandleResetLevel()

@@ -147,7 +147,7 @@ public class UnitController : MonoBehaviour
         }
 
         // End of loop, notify game manager
-        GameManager.instance.EndPlayerTurn();
+        GameManager.instance.EndTurn();
     }
     // Update is called once per frame
     void Update()

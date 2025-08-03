@@ -110,7 +110,7 @@ MonoBehaviour:
   currentPos: {x: 0, y: 0}
   attackEffect: {fileID: 0}
   playerUnit: {fileID: 0}
-  actionDelay: 0.5
+  actionDelay: 0.7
 --- !u!114 &3559413731826655920
 MonoBehaviour:
   m_ObjectHideFlags: 0
