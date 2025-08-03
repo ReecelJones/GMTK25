@@ -16,8 +16,10 @@ MonoBehaviour:
   - ActionType: 3
   - ActionType: 0
   - ActionType: 1
+  - ActionType: 5
+  - ActionType: 5
   availableEnemyActions:
   - ActionType: 1
-  - ActionType: 2
-  - ActionType: 2
+  - ActionType: 3
+  - ActionType: 1
   levelTextFile: {fileID: 4900000, guid: ce8590a0548e3b64f8dc44464c51b895, type: 3}

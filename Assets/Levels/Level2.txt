@@ -1,5 +1,5 @@
-G,R,G,E,G,G
-G,G,R,G,E,G
-G,P,G,R,G,G
+G,G,G,G,G,G
+G,R,E,G,R,G
+G,P,R,G,R,G
 G,G,G,G,R,G
 G,G,G,E,G,G

@@ -1,4 +1,4 @@
-R,E,G,R
+R,G,E,R
 R,G,G,R
 R,G,G,R
 R,P,G,R

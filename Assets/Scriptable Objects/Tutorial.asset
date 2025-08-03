@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availablePlayerActions:
   - ActionType: 0
+  - ActionType: 3
   - ActionType: 5
   availableEnemyActions:
   - ActionType: 1
-  - ActionType: 5
   levelTextFile: {fileID: 4900000, guid: 110297d03eff86e47a8cc17a527077e6, type: 3}
