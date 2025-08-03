@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyUnit : UnitController
@@ -9,6 +10,15 @@ public class EnemyUnit : UnitController
         playerUnit = FindFirstObjectByType<PlayerUnit>();
         GameManager.instance.enemyUnits.Add(this);
         GameManager.instance.objectiveKills++;
+
+        if (levelInfo != null && levelInfo.availableEnemyActions != null)
+        {
+            actionLoop = new List<UnitAction>(levelInfo.availableEnemyActions);
+        }
+        else
+        {
+            Debug.LogWarning("LevelData or availableActions is missing!");
+        }
     }
 
     // Update is called once per frame

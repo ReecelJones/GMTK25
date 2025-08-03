@@ -9,10 +9,9 @@ public class PlayerUnit : UnitController
     {
         base.Start();
 
-        levelInfo = FindFirstObjectByType<LevelLoader>().levelData;
-        if (levelInfo != null && levelInfo.availableActions != null)
+        if (levelInfo != null && levelInfo.availablePlayerActions != null)
         {
-            actionLoop = new List<UnitAction>(levelInfo.availableActions);
+            actionLoop = new List<UnitAction>(levelInfo.availablePlayerActions);
         }
         else
         {
