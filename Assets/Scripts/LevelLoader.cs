@@ -138,7 +138,7 @@ public class LevelLoader : MonoBehaviour
     private void ClearCurrentLevel()
     {
         // Destroy all previous tiles
-        foreach (var tile in FindObjectsOfType<Tile>())
+        foreach (var tile in FindObjectsByType<Tile>(FindObjectsSortMode.None))
         {
             Destroy(tile.gameObject);
         }
@@ -151,7 +151,7 @@ public class LevelLoader : MonoBehaviour
         }
 
         // Destroy enemies
-        foreach (var enemy in FindObjectsOfType<EnemyUnit>())
+        foreach (var enemy in FindObjectsByType<EnemyUnit>(FindObjectsSortMode.None))
         {
             Destroy(enemy.gameObject);
         }
