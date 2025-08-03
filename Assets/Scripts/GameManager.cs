@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        levelLoader.OnLevelFullyLoaded += OnLevelLoaded;
+
         UpdateGameState(GameState.GenerateGrid);
         resultHandler = FindFirstObjectByType<ResultHandler>();
     }
@@ -140,9 +142,6 @@ public class GameManager : MonoBehaviour
 
         // 4. Reload the level
         levelLoader.LoadLevelFromText();
-
-        // 5. Wait a frame and reassign player
-        StartCoroutine(ApplySavedActionsAfterReload());
     }
 
     public void OnEnemyKilled(EnemyUnit enemy)
@@ -164,16 +163,13 @@ public class GameManager : MonoBehaviour
         resultHandler.DisplayEndScreen();
     }
 
-    private IEnumerator ApplySavedActionsAfterReload()
+    private void OnLevelLoaded()
     {
-        // Wait for one frame so the level is fully loaded and player is instantiated
-        yield return null;
-
         playerUnit = FindFirstObjectByType<PlayerUnit>();
 
         if (playerUnit != null)
         {
-            // Restore saved actions
+            // Restore saved actions if this was a reset
             if (savedPlayerActions != null)
                 playerUnit.actionLoop = new List<UnitAction>(savedPlayerActions);
 
@@ -182,20 +178,14 @@ public class GameManager : MonoBehaviour
                 playerActionHandler.playerUnit = playerUnit;
                 playerActionHandler.RefreshUI();
             }
-            else
-            {
-                Debug.LogWarning("PlayerActionHandler is not assigned in GameManager.");
-            }
         }
         else
         {
-            Debug.LogError("PlayerUnit not found after level reload.");
+            Debug.LogError("PlayerUnit not found after level load.");
         }
 
         UpdateGameState(GameState.SetActions);
     }
-
-  
 }
 
 public enum GameState

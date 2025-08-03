@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f16325fcb83f5149ad4d90c9d8de727, type: 3}
-  m_Name: Level 2
+  m_Name: Level 3
   m_EditorClassIdentifier: 
   availablePlayerActions:
+  - ActionType: 3
   - ActionType: 0
   - ActionType: 1
-  - ActionType: 3
   - ActionType: 5
-  - ActionType: 3
+  - ActionType: 5
   availableEnemyActions:
-  - ActionType: 0
   - ActionType: 1
   - ActionType: 3
-  levelTextFile: {fileID: 4900000, guid: b249a0beb2d285648b3f4ee9ebd12a18, type: 3}
+  - ActionType: 1
+  levelTextFile: {fileID: 4900000, guid: ce8590a0548e3b64f8dc44464c51b895, type: 3}

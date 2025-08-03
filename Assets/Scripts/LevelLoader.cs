@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Collections;
+using System;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class LevelLoader : MonoBehaviour
     private PlayerUnit playerInstance;
     private EnemyUnit enemyInstance;
     public PlayerActionHandler playerUIHandler;
+    public event Action OnLevelFullyLoaded;
 
     public void LoadCurrentLevel()
     {
@@ -107,7 +109,7 @@ public class LevelLoader : MonoBehaviour
                 tiles[position] = spawnedTile;
                 GridManager.Instance.RegisterTile(position, spawnedTile);
 
-                LeanTween.moveY(spawnedTile.gameObject, position.y, 0.3f).setEaseOutCubic();
+                LeanTween.moveY(spawnedTile.gameObject, position.y, 0.2f).setEaseOutCubic();
 
                 //created new voids for ease
                 if (symbol == "P") SpawnPlayer(position);
@@ -117,7 +119,7 @@ public class LevelLoader : MonoBehaviour
             }
         }
 
-        GameManager.instance.UpdateGameState(GameState.SetActions);
+        OnLevelFullyLoaded?.Invoke();
     }
 
     private Tile GetTilePrefab(string symbol)
