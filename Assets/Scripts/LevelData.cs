@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/Create Level")]
 public class LevelData : ScriptableObject
 {
-    public UnitAction[] availableActions;
+    public UnitAction[] availablePlayerActions;
+    public UnitAction[] availableEnemyActions;
     public TextAsset levelTextFile;
 }

@@ -109,10 +109,10 @@ public class LevelLoader : MonoBehaviour
                     playerInstance.SetPosition(position);
                     GameManager.instance.playerUnit = playerInstance;
  
-
-                    if (levelData.availableActions != null)
+                    
+                    if (levelData.availablePlayerActions != null)
                     {
-                        playerInstance.actionLoop = new List<UnitAction>(levelData.availableActions);
+                        playerInstance.actionLoop = new List<UnitAction>(levelData.availablePlayerActions);
                     }
 
                     if (playerUIHandler != null)

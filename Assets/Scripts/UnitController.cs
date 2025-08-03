@@ -14,6 +14,7 @@ public class UnitController : MonoBehaviour
     protected Vector2 lastDirection = Vector2.down;
     public GameObject attackEffect;
 
+    protected LevelData levelInfo;
     protected Tile currentTile;
 
     public PlayerUnit playerUnit;
@@ -26,6 +27,7 @@ public class UnitController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
+        levelInfo = FindFirstObjectByType<LevelLoader>().levelData;
         unitAnimator = GetComponent<Animator>();
         unitAudio = GetComponent<AudioSource>();
         currentPos = new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));

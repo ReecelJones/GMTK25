@@ -5991,8 +5991,9 @@ MonoBehaviour:
   playerPrefab: {fileID: -3729608953348409901, guid: 45ea8e11fed36bb4fa2732a7ed032a31, type: 3}
   enemyPrefab: {fileID: -6966735810679535019, guid: 0a91246e315fa7e4fa7ad5242b3f8a2a, type: 3}
   cam: {fileID: 6074384}
-  levelData: {fileID: 11400000, guid: fab773140ec36b840a13b4cf6b234cd3, type: 2}
+  levelData: {fileID: 11400000, guid: f21baf2cd3232f84da68da3b7c286f9d, type: 2}
   levels:
+  - {fileID: 11400000, guid: f21baf2cd3232f84da68da3b7c286f9d, type: 2}
   - {fileID: 11400000, guid: fab773140ec36b840a13b4cf6b234cd3, type: 2}
   - {fileID: 11400000, guid: 9576f17e2302f79488b92f497cf3aa09, type: 2}
   playerUIHandler: {fileID: 857570121}

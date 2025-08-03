@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PlayerUnit : UnitController
 {
-    private LevelData levelInfo;
+    
     [SerializeField] private AudioClip attackHit, attackMiss, move, moveBlock;
 
     protected override void Start()
     {
         base.Start();
 
-        levelInfo = FindFirstObjectByType<LevelLoader>().levelData;
-        if (levelInfo != null && levelInfo.availableActions != null)
+        if (levelInfo != null && levelInfo.availablePlayerActions != null)
         {
-            actionLoop = new List<UnitAction>(levelInfo.availableActions);
+            actionLoop = new List<UnitAction>(levelInfo.availablePlayerActions);
         }
         else
         {
