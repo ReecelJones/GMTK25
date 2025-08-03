@@ -8,6 +8,7 @@ public class LevelLoader : MonoBehaviour
     public Tile enemyTile; // Optional: Use null for now
     public PlayerUnit playerPrefab;
     public EnemyUnit enemyPrefab;
+    public GameObject tutorialPrompt;
 
     public Transform cam;
 
@@ -16,7 +17,7 @@ public class LevelLoader : MonoBehaviour
     public List<LevelData> levels;
     private int currentLevelIndex = 0;
 
-
+    private bool isTutorial = true;
     private Dictionary<Vector2, Tile> tiles;
     private PlayerUnit playerInstance;
     private EnemyUnit enemyInstance;
@@ -51,14 +52,24 @@ public class LevelLoader : MonoBehaviour
     public void LoadLevelFromText()
     {
         ClearCurrentLevel();
-
+        
         if (levelData.levelTextFile == null)
         {
             Debug.LogError("No level text file assigned!");
             return;
         }
 
-        tiles = new Dictionary<Vector2, Tile>();
+        if (isTutorial)
+        {
+            tutorialPrompt.SetActive(true);
+            isTutorial = false;
+        }
+        else 
+        { 
+            Destroy(tutorialPrompt);
+        }
+
+            tiles = new Dictionary<Vector2, Tile>();
 
         string[] lines = levelData.levelTextFile.text.Trim().Split('\n');
         int height = lines.Length;
