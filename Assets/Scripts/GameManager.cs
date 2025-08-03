@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public static event Action<GameState> OnGameStateChanged;
 
     public List<EnemyUnit> enemyUnits = new List<EnemyUnit>();
+    public int enemyCompletedTurn;
     public PlayerUnit playerUnit;
 
     [SerializeField] private LevelLoader levelLoader;
@@ -81,10 +82,15 @@ public class GameManager : MonoBehaviour
 
     private void EnemyTurn()
     {
+        for (int i = 0; i < enemyUnits.Count; i++)
+        {
+            enemyUnits[i].PlayActionLoop();
+        }
+        /*
         foreach (var enemy in enemyUnits)
         {
             enemy.PlayActionLoop();
-        }
+        }*/
     }
 
     public void StartPlayerTurn()

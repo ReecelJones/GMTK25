@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyUnit : UnitController
 {
+
+    private bool hasCompletedTurn = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
@@ -21,9 +23,20 @@ public class EnemyUnit : UnitController
         }
     }
 
+    public override void InitiateEndTurn()
+    {
+        GameManager.instance.enemyCompletedTurn++;
+        if (GameManager.instance.enemyCompletedTurn == GameManager.instance.enemyUnits.Count)
+        {
+            base.InitiateEndTurn();
+            GameManager.instance.enemyCompletedTurn = 0;
+        }
+        else return;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameManager.instance.GameState != GameState.EnemyTurn) return;
     }
 }

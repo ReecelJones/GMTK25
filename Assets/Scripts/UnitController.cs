@@ -142,8 +142,6 @@ public class UnitController : MonoBehaviour
         {
             Instantiate(attackEffect, attackDir, Quaternion.identity);
         }
-
-        print("boop");
     }
 
     public void PlayActionLoop()
@@ -161,6 +159,11 @@ public class UnitController : MonoBehaviour
         }
 
         // End of loop, notify game manager
+        InitiateEndTurn();
+    }
+
+    public virtual void InitiateEndTurn()
+    {
         GameManager.instance.EndTurn();
     }
     // Update is called once per frame

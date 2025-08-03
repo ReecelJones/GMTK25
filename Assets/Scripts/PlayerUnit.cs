@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PlayerUnit : UnitController
 {
-    private LevelData levelInfo;
-
     protected override void Start()
     {
         base.Start();
