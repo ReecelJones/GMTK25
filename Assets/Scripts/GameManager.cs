@@ -58,6 +58,10 @@ public class GameManager : MonoBehaviour
                 EnemyTurn();
                 break;
             case GameState.EndResult:
+                if(levelLoader.tutorialPrompt != null)
+                {
+                    Destroy(levelLoader.tutorialPrompt);
+                }
                 if (playerIsDead)
                 {
                     HandleResult(false);

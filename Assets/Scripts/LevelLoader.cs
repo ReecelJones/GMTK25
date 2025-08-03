@@ -170,4 +170,15 @@ public class LevelLoader : MonoBehaviour
         // Clear grid tiles
         GridManager.Instance.ClearAllTiles();
     }
+
+    private void Update()
+    {
+        if(isTutorial)
+        {
+            if(GameManager.instance.GameState == GameState.EndResult)
+            {
+                Destroy(tutorialPrompt);
+            }
+        }
+    }
 }

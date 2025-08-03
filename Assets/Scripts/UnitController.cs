@@ -98,6 +98,17 @@ public class UnitController : MonoBehaviour
         if (tile == null || tile is RockTile || IsUnitAtPosition(newPosition))
         {
             unitAudio.PlayOneShot(moveBlock);
+
+            //LeanTween bounce for when unit is blocked
+            Vector3 originalPos = transform.position;
+            Vector3 bumpPos = originalPos + (Vector3)(direction * 0.15f);
+
+            LeanTween.move(gameObject, bumpPos, 0.05f)
+            .setEaseInBounce()
+            .setOnComplete(() =>
+            {
+                LeanTween.move(gameObject, originalPos, 0.1f).setEaseInQuad();
+            });
             return;
         }
         else
